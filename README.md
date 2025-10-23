@@ -1,6 +1,4 @@
-# Proyecto React (Parte 7) - Pizzeria Mamma Mia! / Juan Eduardo Castellón (G95)
-
-# NOTA: Recordar que al actualizar la página, el token pasa automáticamente a "true" como fue solicitado en el punto 2 del Hito.
+# Proyecto React (Parte 8) - Pizzeria Mamma Mia! / Juan Eduardo Castellón (G95)
 
 # Características
 Lista de pizzas con imágenes, descripción y precios.
