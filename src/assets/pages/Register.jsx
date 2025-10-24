@@ -1,12 +1,16 @@
+import Header from "../../components/Header"
 import {useState} from 'react'
-import Header from "../../components/Header";
+import { useUser } from "../../components/UserContext"
+import { useNavigate } from "react-router-dom"
 
 export default function Register() {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
+    const { register } = useUser()
+    const navigate = useNavigate()
 
-    const validarDatos = (e) => {
+    const validarDatos = async (e) => {
     e.preventDefault()
     if (!mail.trim() || !password.trim() || !repassword.trim()) {
       alert("Todos los campos son obligatorios")
@@ -20,8 +24,17 @@ export default function Register() {
       alert("Las contraseñas no coinciden")
       return
     }
-    alert("Registro exitoso")
+
+    const result = await register(mail, password)
+
+    if (result.success) {
+      alert("Registro exitoso")
+      navigate("/profile")
+    } else {
+      alert(`Error: ${result.message}`)
+    }
   }
+
   return (
     <>
     <Header/>
@@ -30,11 +43,11 @@ export default function Register() {
     </div>
     <form className='formulario' onSubmit={validarDatos}>
         <p>Email</p>
-        <input type="text" name="Email" onChange={(e)=> {setMail(e.target.value)}}/><br/>
+        <input type="text" name="Email" value={mail}  onChange={(e)=> {setMail(e.target.value)}}/><br/>
         <p>Contraseña</p>
-        <input type="text" name="Password" onChange={(e)=> {setPassword(e.target.value)}}/><br/>
+        <input type="text" name="Password" value={password}  onChange={(e)=> {setPassword(e.target.value)}}/><br/>
         <p>Confirmar contraseña</p>
-        <input type="text" name="RePassword" onChange={(e)=> {setRepassword(e.target.value)}}/><br/><br/>
+        <input type="text" name="RePassword" value={repassword} onChange={(e)=> {setRepassword(e.target.value)}}/><br/><br/>
         <button type="submit">Enviar</button>
     </form>
     </>

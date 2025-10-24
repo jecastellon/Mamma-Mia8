@@ -10,6 +10,8 @@ import Profile from './assets/pages/Profile'
 import NotFound from './assets/pages/NotFound'
 import { Routes, Route, Navigate } from "react-router-dom"
 import { UserProvider, useUser } from './components/UserContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import PublicRoute from './components/PublicRoute'
 
 function App() {
 
@@ -19,11 +21,11 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/register' element={useUser().token ? <Navigate to="/"/> : <Register/>}/>
-        <Route path='/login' element={useUser().token ? <Navigate to="/"/> : <LoginPage/>}/>
+        <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
+        <Route path='/login' element={<PublicRoute><LoginPage/></PublicRoute>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/pizza/:id' element={<Pizza/>}/>
-        <Route path='/profile' element={useUser().token ? <Profile/> : <Navigate to="/login"/>}/>
+        <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
         <Route path='/404' element={<NotFound/>}/>
         <Route path='*' element={<NotFound/>}/>
       </Routes>

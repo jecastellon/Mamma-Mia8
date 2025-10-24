@@ -1,11 +1,15 @@
+import Header from '../../components/Header'
 import {useState} from 'react'
-import Header from '../../components/Header';
+import {useUser} from '../../components/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
     const [mail, setMail] = useState("")
     const [password, setPassword] = useState("")
+    const { login } = useUser()
+    const navigate = useNavigate()
 
-    const validarDatos = (e) => {
+    const validarDatos = async (e) => {
     e.preventDefault()
     if (!mail.trim() || !password.trim()) {
       alert("Todos los campos son obligatorios")
@@ -15,7 +19,16 @@ export default function LoginPage() {
       alert("La contraseña debe tener al menos 6 caracteres")
       return
     }
-    alert("Ingreso exitoso")
+
+    const result = await login(mail, password)
+
+    if (result.success) {
+      alert("Ingreso exitoso")
+      navigate("/profile")
+    } else {
+      alert(`Error: ${result.message}`)
+    }
+  
   }
 
   return (
@@ -26,9 +39,9 @@ export default function LoginPage() {
     </div>
     <form className='formulario' onSubmit={validarDatos}>
         <p>Email</p>
-        <input type="text" name="Email" onChange={(e)=> {setMail(e.target.value)}}/><br/>
+        <input type="text" name="Email" value={mail} onChange={(e)=> {setMail(e.target.value)}}/><br/>
         <p>Contraseña</p>
-        <input type="text" name="Password" onChange={(e)=> {setPassword(e.target.value)}}/><br/>
+        <input type="text" name="Password" value={password} onChange={(e)=> {setPassword(e.target.value)}}/><br/><br/>
         <button type="submit">Enviar</button>
     </form>
     </>
