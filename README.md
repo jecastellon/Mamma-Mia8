@@ -1,4 +1,5 @@
 # Proyecto React (Parte 8) - Pizzeria Mamma Mia! / Juan Eduardo Castellón (G95)
+# NOTA: Se investiga e implementa ProtectedRoute y PublicRoute para completar el Hito
 
 # Características
 Lista de pizzas con imágenes, descripción y precios.
